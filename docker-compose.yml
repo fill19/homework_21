@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  app:
+    image: 'task-image:latest'
+    build:
+      context: src/main/java/Cursor/homework_21/
+    container_name: homework_21
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/book_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQL95Dialect
+    ports:
+      - 8081:8080
+
+  db:
+    image: 'task-with-postgres-image:latest'
+    build:
+      context: src/main/DockerTask/
+    container_name: docked-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5776:5432
